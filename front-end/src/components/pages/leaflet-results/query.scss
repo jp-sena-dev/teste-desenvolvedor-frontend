@@ -1,0 +1,14 @@
+thead {
+  background-color: gray;
+  font-size: 15px;
+}
+
+thead > tr > th {
+  padding: 12px;
+}
+
+table {
+  font-size: 14px;
+  font-weight: normal;
+  border: 1px solid rgba(114, 114, 114, 0.623);
+}
