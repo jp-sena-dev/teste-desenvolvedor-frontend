@@ -5,8 +5,6 @@ export function DisplayName() {
   const location = useLocation();
   const currentDisplay = location.pathname;
 
-  console.log(currentDisplay)
-
   return (
     <div className='DisplayName'>
       <span className={`${currentDisplay === '/' && 'active'}`}>

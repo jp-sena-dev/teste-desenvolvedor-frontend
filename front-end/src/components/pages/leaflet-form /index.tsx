@@ -14,6 +14,11 @@ export function LeafletForm() {
     navigate(`/bulario/name/${leafletName || '%20'}/company/${leafleCompany || '%20'}/id/${leafleId || '%20'}`)
   }
 
+  const HandleResetInfos = () => {
+    setLeafletName('');
+    setLeafletCompany('');
+    setLeafletId('');
+  };
 
   return (
     <main>
@@ -35,7 +40,7 @@ export function LeafletForm() {
         </div>
         <div style={{ margin: '0 auto' }}>
           <button className='submit' type="submit">Consultar</button>
-          <button type="submit">Limpar</button>
+          <button type="button" onClick={HandleResetInfos}>Limpar</button>
         </div>
       </form>
     </main>

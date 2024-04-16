@@ -4,7 +4,10 @@ label {
   display: flex;
   width: 48%;
   flex-direction: column;
-  gap: 4px;
+  gap: 6px;
+  @media (max-width: 600px) {
+    width: 98%;
+  }
 }
 
 input {
