@@ -1,0 +1,1 @@
+export const formatterURL = (name: string) => name.trim()?.split(' ').join('%20');
