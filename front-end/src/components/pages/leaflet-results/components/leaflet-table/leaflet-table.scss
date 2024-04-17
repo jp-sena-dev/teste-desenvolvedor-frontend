@@ -1,0 +1,31 @@
+thead {
+  background-color: gray;
+  font-size: 15px;
+}
+
+tbody > tr > th, thead > tr > th {
+  padding: 12px;
+}
+
+table {
+  font-size: 14px;
+  @media (max-width: 720px) {
+    font-size: 12px;
+  }
+  width: 100%;
+  border-collapse: collapse;
+  font-weight: normal;
+  border: 1px solid rgba(114, 114, 114, 0.623);
+}
+
+div.Table {
+  display: none;
+  width: 100%;
+  overflow-x: scroll;
+  scroll-behavior: auto;
+  @media (min-width: 720px) {
+    display: block;
+  }
+}
+
+
