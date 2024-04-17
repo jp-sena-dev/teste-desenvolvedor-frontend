@@ -1,13 +1,15 @@
+import './query.scss';
 import { useEffect, useState } from 'react';
-import './query.scss'
 import { fetchLeaflets } from '../../../utils/api/get-leaflet';
-import { useParams } from 'react-router-dom';
-import { PdfSvg } from '../../../../public/pdf-svg';
+import { useNavigate, useParams } from 'react-router-dom';
 import { DisplayName } from '../../atoms/display-name';
 import { FetchLeaflet } from '../../../types/leaflet';
+import { LeafletTable } from './components/leaflet-table';
+import { LeafletMobileTable } from './components/leaflet-mobile-table';
 
 export function LeafletResults() {
   const param = useParams();
+  const navigate = useNavigate();
   const [medicationList, setMedicationList] = useState<FetchLeaflet>();
   const [currentePageNumber, setCurrentePageNumber] = useState(1);
 
@@ -33,76 +35,35 @@ export function LeafletResults() {
   return (
     <main>
       <DisplayName />
-      <div className='Table'>
-        <table>
-          <thead>
-            <tr>
-              <th>Medicamento</th>
-              <th>Empresa</th>
-              <th>Expediente</th>
-              <th>Data de Pubicação</th>
-              <th>Bula do Paciente</th>
-              <th>Bula do proficional</th>
-            </tr>
-          </thead>
-          <tbody>
-            {medicationList && medicationList.data.map((medication) => (
-              <tr>
-                <th>{medication.name}</th>
-                <th>{medication.company}</th>
-                <th>{medication.documents[0].expedient}</th>
-                <th>{new Date(medication.published_at).toLocaleDateString('pt-BR')}</th>
-                <th>
-                  <a
-                    target='_blank'
-                    href={medication.documents.filter((document) => document.type === 'PATIENT')[0].url}
-                  >
-                    <PdfSvg/>
-                  </a>
-                </th>
-                <th>
-                  <a
-                    target='_blank'
-                    href={medication.documents.filter((document) => document.type === 'PROFESSIONAL')[0].url}
-                  >
-                    <PdfSvg/>
-                  </a>
-                </th>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-      <div className='Table Mobile'>
-        <table>
-          <thead>
-            <tr>
-              <th>Medicamento</th>
-              <th>Empresa</th>
-              <th>Sobre</th>
-            </tr>
-          </thead>
-          <tbody>
-            {medicationList && medicationList.data.map((medication) => (
-              <tr>
-                <th>{medication.name}</th>
-                <th>{medication.company}</th>
-                <th><a rel="stylesheet" href="#">ver mais...</a></th>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-      <div className='ButtonSection'>
-        <button>Voltar</button>
+      <LeafletTable medicationList={medicationList} />
+      <LeafletMobileTable medicationList={medicationList} />
+      <div className="ButtonSection">
+        <button className="Back" onClick={() => navigate('/')}>Voltar</button>
         {medicationList?.pages > 1 && (
           <div>
-            <button disabled={!medicationList?.prev} onClick={() => searchMedications(medicationList?.prev)}>{'<'}</button>
-              {Array.from({ length: medicationList?.pages}).map((_, index) => (
-                <button className={`${currentePageNumber - 1 === index  && 'active'}`} onClick={() => searchMedications(index + 1)}>{index + 1}</button>
-              ))}
-              <button disabled={!medicationList?.next} onClick={() => searchMedications(medicationList?.next)}>{'>'}</button>
-            </div>
+            <button
+              className='LastPage'
+              disabled={medicationList?.prev > 0}
+              onClick={() => searchMedications(medicationList?.prev)}
+            >
+              {'<'}
+            </button>
+            {Array.from({ length: medicationList?.pages}).map((_, index) => (
+              <button
+                className={`PageButton ${currentePageNumber - 1 === index  && 'active'}`}
+                onClick={() => searchMedications(index + 1)}
+              >
+                {index + 1}
+              </button>
+            ))}
+            <button
+              className='NextPage'
+              disabled={!medicationList?.next}
+              onClick={() => searchMedications(medicationList?.next)}
+            >
+              {'>'}
+            </button>
+          </div>
         )}
       </div>
     </main>
