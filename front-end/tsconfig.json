@@ -20,6 +20,6 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src", "public/pdf-svg.tsx"],
+  "include": ["src", "src/assets/pdf-svg.tsx"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
