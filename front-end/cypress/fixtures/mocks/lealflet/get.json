@@ -1,0 +1,36 @@
+{
+  "first": 1,
+  "prev": null,
+  "next": null,
+  "last": null,
+  "pages": 1,
+  "items": 1,
+  "data": [
+    {
+      "id": "c3fadb4e-caa2-4774-aa9c-5a422b4034cf",
+			"name": "AMOXICILINA",
+			"published_at": "2022-07-27T15:49:38.000Z",
+			"company": "MULTILAB INDUSTRIA E COMERCIO DE PRODUTOS FARMACEUTICOS LTDA",
+			"documents": [
+				{
+					"id": "9ca6798f-4c42-4505-b38c-0329778b38d4",
+					"expedient": "4458912224",
+					"type": "PROFESSIONAL",
+					"url": "http://localhost:3000/pdf_sample.pdf"
+				},
+				{
+					"id": "f6d9fa44-3533-4f72-b7e3-f5ed5a01e274",
+					"expedient": "4458912224",
+					"type": "PATIENT",
+					"url": "http://localhost:3000/pdf_sample.pdf"
+				}
+			],
+			"active_principles": [
+				{
+					"id": "52b6792f-0330-421f-b155-a27f418ffb4d",
+					"name": "TADALAFILA"
+				}
+			]
+    }
+  ]
+}
