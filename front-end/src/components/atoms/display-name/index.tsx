@@ -3,14 +3,13 @@ import { Link, useLocation } from 'react-router-dom';
 
 export function DisplayName() {
   const location = useLocation();
-  const currentDisplay = location.pathname;
 
   return (
-    <div className='DisplayName'>
-      <span className={`${currentDisplay === '/' && 'active'}`}>
+    <div className='DisplayNames'>
+      <span className={`DisplayName ${location.pathname !== '/' ? '' : 'active'}`}>
         <Link to="/">Consultas / </Link>
       </span>
-      { location.pathname.includes('bulario') && <span className="active">Bulário</span>}
+      { location.pathname.includes('bulario') && <span className="DisplayName active">Bulário</span>}
     </div>
   );
 }
