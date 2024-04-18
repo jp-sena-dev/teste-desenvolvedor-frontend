@@ -12,3 +12,19 @@ div.ButtonSection {
     }
   }
 }
+
+div.TableHeader {
+  display: grid;
+  grid-template-columns: 5% 1fr;
+  gap: 16px;
+  margin-bottom: 14px;
+}
+
+select.OrderByContainer {
+  border: none;
+  outline: none;
+  border: 1px solid rgba(114, 114, 114, 0.623);
+  font-size: 16px;
+  padding: 12px;
+  border-radius: 4px;
+}
