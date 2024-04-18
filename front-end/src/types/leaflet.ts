@@ -36,9 +36,17 @@ export type FetchLeaflet = {
   data: Leaflet[];
 }
 
+const SortQueryleaflet = {
+  name: 'name',
+  published_at: 'published_at',
+};
+
+export type SortQueryleaflet = 'name' | 'published_at';
+
 export interface Queryleaflet {
   id?: string;
-  page?: number;
+  page: number;
   name?: string;
   company?: string;
+  sort?: SortQueryleaflet;
 }

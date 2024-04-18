@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { fetchLeaflets } from '../../../utils/api/get-leaflet';
 import { useNavigate, useParams } from 'react-router-dom';
 import { DisplayName } from '../../atoms/display-name';
-import { FetchLeaflet } from '../../../types/leaflet';
+import { FetchLeaflet, SortQueryleaflet } from '../../../types/leaflet';
 import { LeafletTable } from './components/leaflet-table';
 import { LeafletMobileTable } from './components/leaflet-mobile-table';
 
@@ -12,6 +12,7 @@ export function LeafletResults() {
   const navigate = useNavigate();
   const [medicationList, setMedicationList] = useState<FetchLeaflet>();
   const [currentePageNumber, setCurrentePageNumber] = useState(1);
+  const [medicationSort, setMedicationSort] = useState<SortQueryleaflet | undefined>();
 
   const searchMedications = async (pageNumber?: number) => {
     try {
@@ -19,7 +20,8 @@ export function LeafletResults() {
         company: param.company,
         name: param.name,
         page: pageNumber || 1,
-        id: param.id
+        id: param.id,
+        sort: medicationSort,
       });
       setCurrentePageNumber(pageNumber || 1)
       setMedicationList(data);
@@ -30,11 +32,33 @@ export function LeafletResults() {
 
   useEffect(() => {
     searchMedications();
-  }, []);
+  }, [medicationSort]);
+
+  const handleChangeSort = ({ target : { value }}) => {
+    if (value) setMedicationSort(value);
+  };
+
+  const handleClickLastPage = () => {
+    if (medicationList?.prev) searchMedications(medicationList?.prev);
+  }
+
+  const handleClickNextPage = () => {
+    if (medicationList?.next) searchMedications(medicationList?.next);
+  }
 
   return (
     <main>
-      <DisplayName />
+      <div className='TableHeader'>
+        <DisplayName />
+        <select
+        className='OrderByContainer'
+        onChange={handleChangeSort}
+      >
+          <option value="">Ordernar por:</option>
+          <option value="published_at">Data</option>
+          <option value="name">Nome</option>
+        </select>
+      </div>
       <LeafletTable medicationList={medicationList} />
       <LeafletMobileTable medicationList={medicationList} />
       <div className="ButtonSection">
@@ -43,8 +67,7 @@ export function LeafletResults() {
           <div>
             <button
               className='LastPage'
-              disabled={medicationList?.prev > 0}
-              onClick={() => searchMedications(medicationList?.prev)}
+              onClick={handleClickLastPage}
             >
               {'<'}
             </button>
@@ -58,8 +81,7 @@ export function LeafletResults() {
             ))}
             <button
               className='NextPage'
-              disabled={!medicationList?.next}
-              onClick={() => searchMedications(medicationList?.next)}
+              onClick={handleClickNextPage}
             >
               {'>'}
             </button>
