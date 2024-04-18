@@ -55,9 +55,9 @@ describe('LeafletResults', () => {
       }));
   
       return {
-        prev: pageNumber - 1,
+        prev: pageNumber,
         next: pageNumber + 1,
-        last: pageNumber,
+        // last: pageNumber,
         pages: totalPages,
         items: totalItems,
         data,
@@ -77,12 +77,25 @@ describe('LeafletResults', () => {
 
     cy.get('button.LastPage').click();
     cy.intercept('GET', '/data*', (req) => req.reply(generatePageData(1)));
+    
     cy.get('.MedicineItem').should('have.length', 10);
-    cy.contains('.PageButton.active', '1')
+    cy.contains('.PageButton.active', '1');
 
     cy.get('button.Back').click();
     cy.url().should('include', '/');
-
   });
 
+  it(('Should correctly sort results'), () => {
+    cy.visit(`/bulario/name/%20/company/%20/id/%20`);
+
+    cy.get('select.OrderByContainer').select('name');
+    cy.intercept({method: 'GET', url: '/data*'  }, { fixture: '/mocks/lealflet/get.json' }, (req) => {
+      req.url.include('name')
+    });
+
+    cy.get('select.OrderByContainer').select('published_at');
+    cy.intercept({method: 'GET', url: '/data*'  }, { fixture: '/mocks/lealflet/get.json' }, (req) => {
+      req.url.include('published_at')
+    });
+  });
 });
