@@ -1,0 +1,44 @@
+div#pagination-button-container {
+  button {
+    background-color: #5B7CFF;
+    color: white;
+    border: none;
+
+    height: min-content;
+    width: min-content;
+    padding: 8px 10px;
+    margin-right: 4px;
+  
+    text-align: center;
+    font-weight: bold;
+    cursor: pointer;
+
+    &:hover {
+      background-color: #3d61f0;
+    }
+  }
+
+  button.pagination-button-number {
+    border-radius: 50%;
+    width: min-content;
+    padding: 8px 10px;
+    text-align: center;
+    background-color: transparent;
+    height: min-content;
+    
+    color: black;
+
+    &:hover {
+      background-color: #e7e7e7;
+    }
+
+    &.active {
+      background-color: #5B7CFF;
+      color: white;
+      &:hover {
+        background-color: #3d61f0;
+      }
+    }
+  }
+}
+
