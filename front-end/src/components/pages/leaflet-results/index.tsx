@@ -1,11 +1,11 @@
-import './query.scss';
+import './leaflet-results.scss';
 import { useEffect, useState } from 'react';
 import { fetchLeaflets } from '../../../utils/api/get-leaflet';
 import { useNavigate, useParams } from 'react-router-dom';
-import { DisplayName } from '../../atoms/display-name';
 import { FetchLeaflet, SortQueryleaflet } from '../../../types/leaflet';
 import { LeafletTable } from './components/leaflet-table';
-import { LeafletMobileTable } from './components/leaflet-mobile-table';
+import { ResultsHeader } from './components/results-header';
+import { PaginationButton } from '../../atoms/pagination-button';
 
 export function LeafletResults() {
   const param = useParams();
@@ -34,7 +34,7 @@ export function LeafletResults() {
     searchMedications();
   }, [medicationSort]);
 
-  const handleChangeSort = ({ target : { value }}) => {
+  const handleChangeSort = (value?: SortQueryleaflet) => {
     if (value) setMedicationSort(value);
   };
 
@@ -47,46 +47,28 @@ export function LeafletResults() {
   }
 
   return (
-    <main>
-      <div className='TableHeader'>
-        <DisplayName />
-        <select
-        className='OrderByContainer'
-        onChange={handleChangeSort}
-      >
-          <option value="">Ordernar por:</option>
-          <option value="published_at">Data</option>
-          <option value="name">Nome</option>
-        </select>
-      </div>
-      <LeafletTable medicationList={medicationList} />
-      <LeafletMobileTable medicationList={medicationList} />
-      <div className="ButtonSection">
-        <button className="Back" onClick={() => navigate('/')}>Voltar</button>
-        {medicationList?.pages > 1 && (
-          <div>
-            <button
-              className='LastPage'
-              onClick={handleClickLastPage}
-            >
-              {'<'}
-            </button>
-            {Array.from({ length: medicationList?.pages}).map((_, index) => (
-              <button
-                className={`PageButton ${currentePageNumber - 1 === index  && 'active'}`}
-                onClick={() => searchMedications(index + 1)}
-              >
-                {index + 1}
-              </button>
-            ))}
-            <button
-              className='NextPage'
-              onClick={handleClickNextPage}
-            >
-              {'>'}
-            </button>
-          </div>
-        )}
+    <main id="results-page">
+      <div className="results-container">
+        <ResultsHeader handleChangeSort={handleChangeSort} />
+        <LeafletTable medicationList={medicationList} />
+        <div className="buttons-container">
+          <button className="Back" onClick={() => navigate('/')}>Voltar</button>
+          {medicationList?.pages > 1 && (
+            <div>
+              <PaginationButton
+                handleClickLastPage={handleClickLastPage}
+                handleClickNextPage={handleClickNextPage}
+                handleClickNumberPage={searchMedications}
+                paginationInformation={
+                  {
+                    currentePageNumber,
+                    pageCount: medicationList?.pages || 1
+                  }
+                }
+              />
+            </div>
+          )}
+        </div>
       </div>
     </main>
   );

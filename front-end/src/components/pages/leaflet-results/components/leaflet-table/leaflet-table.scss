@@ -1,30 +1,28 @@
-thead {
-  background-color: gray;
-  font-size: 15px;
-}
+div.table-results-page {
+  min-height: 500px;
 
-tbody > tr > th, thead > tr > th {
-  padding: 12px;
-}
-
-table {
-  font-size: 14px;
-  @media (max-width: 720px) {
-    font-size: 12px;
-  }
-  width: 100%;
-  border-collapse: collapse;
-  font-weight: normal;
-  border: 1px solid rgba(114, 114, 114, 0.623);
-}
-
-div.Table {
-  display: none;
-  width: 100%;
-  overflow-x: scroll;
-  scroll-behavior: auto;
-  @media (min-width: 720px) {
-    display: block;
+  table {
+    font-size: 14px;
+    font-weight: normal;
+    width: 100%;
+    border: none;
+    border-radius: 20px;
+    border-collapse: collapse;
+  
+    @media (max-width: 720px) {
+      font-size: 12px;
+    }
+  
+    thead {
+      background-color: #5b7cff;
+      color: white;
+      font-size: 15px;
+    }
+  
+    
+    tbody > tr > th, thead > tr > th {
+      padding: 14px;
+    }
   }
 }
 

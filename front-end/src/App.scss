@@ -1,4 +1,4 @@
-body {
+body, * {
   font-family: sans-serif;
   padding: 0;
   box-sizing: border-box;
@@ -10,20 +10,4 @@ h1 {
   color: #2556B1;
   margin-top: 24px;
   margin-left: 24px;
-}
-
-div.divider {
-  width: 100%;
-  height: 1px;
-  background-color: rgba(114, 114, 114, 0.623);
-  margin: 24px 0;
-}
-
-main {
-  width: 75vw;
-  max-width: 1200px;
-  margin: 20px auto;
-  @media (max-width: 860px) {
-    width: 90vw;
-  }
 }

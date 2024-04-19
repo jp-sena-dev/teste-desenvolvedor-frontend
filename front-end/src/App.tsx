@@ -14,13 +14,13 @@ function App() {
   );
 
   return (
-    <>
-      <h1>Consultas</h1>
-      <div className='divider'/>
-      <main>
-        <RouterProvider router={router} />
-      </main>
-    </>
+    // <>
+    //   <h1>Consultas</h1>
+    //   <div className='divider'/>
+    //   <main>
+    <RouterProvider router={router} />
+    //   </main>
+    // </>
   )
 }
 
