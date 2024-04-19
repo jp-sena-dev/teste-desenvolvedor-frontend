@@ -9,13 +9,13 @@ describe('LeafletResults', () => {
   it('should display medication information when searching by name', () => {
     cy.visit(`/bulario/name/${encodeURIComponent(medicineName.toUpperCase())}/company/%20/id/%20`);
 
-    cy.get(".medicineName").should("contain", medicineName);
+    cy.get(".medicine-name").should("contain", medicineName);
   });
 
   it('should allow the user to search for medication by company', () => {
     cy.visit(`/bulario/name/%20/company/${encodeURIComponent(company.toUpperCase())}/id/%20`);
 
-    cy.get(".medicineCompany").should("contain", company);
+    cy.get(".medicine-company").should("contain", company);
   });
 
   it('should paginate results correctly', () => {
@@ -57,7 +57,6 @@ describe('LeafletResults', () => {
       return {
         prev: pageNumber,
         next: pageNumber + 1,
-        // last: pageNumber,
         pages: totalPages,
         items: totalItems,
         data,
@@ -67,35 +66,45 @@ describe('LeafletResults', () => {
     cy.visit(`/bulario/name/${encodeURIComponent(medicineName.toUpperCase())}/company/%20/id/%20`);
 
     cy.intercept('GET', '/data*', (req) => req.reply(generatePageData(1)));
-    cy.get('.MedicineItem').should('have.length', 10);
-    cy.contains('.PageButton.active', '1');
+    cy.get('.medicine-item').should('have.length', 10);
+    cy.contains('.pagination-button-number.active', '1');
 
     cy.get('button.NextPage').click();
     cy.intercept('GET', '/data*', (req) => req.reply(generatePageData(2)));
-    cy.get('.MedicineItem').should('have.length', 10);
-    cy.contains('.PageButton.active', '2');
+    cy.get('.medicine-item').should('have.length', 10);
+    cy.contains('.pagination-button-number.active', '2');
 
     cy.get('button.LastPage').click();
     cy.intercept('GET', '/data*', (req) => req.reply(generatePageData(1)));
     
-    cy.get('.MedicineItem').should('have.length', 10);
-    cy.contains('.PageButton.active', '1');
+    cy.get('.medicine-item').should('have.length', 10);
+    cy.contains('.pagination-button-number.active', '1');
 
-    cy.get('button.Back').click();
+    cy.get('button.back').click();
     cy.url().should('include', '/');
   });
 
   it(('Should correctly sort results'), () => {
     cy.visit(`/bulario/name/%20/company/%20/id/%20`);
 
-    cy.get('select.OrderByContainer').select('name');
+    cy.get('select.sort-select').select('name');
     cy.intercept({method: 'GET', url: '/data*'  }, { fixture: '/mocks/lealflet/get.json' }, (req) => {
       req.url.include('name')
     });
 
-    cy.get('select.OrderByContainer').select('published_at');
+    cy.get('select.sort-select').select('published_at');
     cy.intercept({method: 'GET', url: '/data*'  }, { fixture: '/mocks/lealflet/get.json' }, (req) => {
       req.url.include('published_at')
     });
+  });
+
+  it('Should open the details modal when clicking "Saiba+"', () => {
+    cy.visit(`/bulario/name/%20/company/%20/id/%20`);
+
+    cy.get('.show-medicine-informations').click();
+    cy.get('.modal-medicine-container').children();
+
+    cy.get('.close-modal').click();
+    cy.get('.modal-medicine-container').should('not.have.class', 'show');
   });
 });
