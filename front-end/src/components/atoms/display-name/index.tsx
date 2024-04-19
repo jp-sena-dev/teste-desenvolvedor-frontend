@@ -6,10 +6,10 @@ export function DisplayName() {
 
   return (
     <div className='DisplayNames'>
-      <span className={`DisplayName ${location.pathname !== '/' ? '' : 'active'}`}>
-        <Link to="/">Consultas / </Link>
-      </span>
-      { location.pathname.includes('bulario') && <span className="DisplayName active">Bulário</span>}
+      <div className={`DisplayName ${location.pathname !== '/' ? '' : 'active'}`}>
+        <Link to="/">Consultas</Link>
+      </div>
+      <div className={`DisplayName ${location.pathname.includes('bulario') ? 'active' : ''}`}>Bulário</div>
     </div>
   );
 }
