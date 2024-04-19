@@ -1,7 +1,8 @@
-import './query.scss';
+import './leaflet-form.scss';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { DisplayName } from '../../atoms/display-name';
+import { Input } from '../../atoms/input';
 
 export function LeafletForm() {
   const [leafletName, setLeafletName] = useState('');
@@ -23,28 +24,25 @@ export function LeafletForm() {
   };
 
   return (
-    <main>
-      <DisplayName />
-      <form onSubmit={(e) => { e.preventDefault(); HandleSubmit(); }}>
+    <main id="leaflet-page-container">
+      <div className="leaflet-form-container">
         <div>
-          <label>
-            Medicamento
-            <input name="medicine" onChange={({ target }) => setLeafletName(target.value)} value={leafletName}/>
-          </label>
-          <label>
-            ID
-            <input name="id" onChange={({ target }) => setLeafletId(target.value)} value={leafleId}/>
-          </label>
-          <label>
-            Compania
-            <input name="company" onChange={({ target }) => setLeafletCompany(target.value)} value={leafleCompany}/>
-          </label>
+          {/* <img src="https://images.pexels.com/photos/8949916/pexels-photo-8949916.jpeg" alt="" /> */}
+          <h1>Boas vindas ao bulário online</h1>
         </div>
-        <div style={{ margin: '0 auto' }}>
-          <button className='submit' type="submit">Consultar</button>
-          <button type="button" onClick={HandleResetInfos}>Limpar</button>
-        </div>
-      </form>
+        <form onSubmit={(e) => { e.preventDefault(); HandleSubmit(); }}>
+          <DisplayName />
+          <div>
+            <Input description="Medicamento" name="medicine" onChange={({ target }) => setLeafletName(target.value)} value={leafletName}/>
+            <Input description="ID" name="id" onChange={({ target }) => setLeafletId(target.value)} value={leafleId}/>
+            <Input description="Empresa" name="company" onChange={({ target }) => setLeafletCompany(target.value)} value={leafleCompany}/>
+          </div>
+          <div>
+            <button className='submit' type="submit">Consultar</button>
+            <button type="button" onClick={HandleResetInfos}>Limpar</button>
+          </div>
+        </form>
+      </div>
     </main>
   );
 }
