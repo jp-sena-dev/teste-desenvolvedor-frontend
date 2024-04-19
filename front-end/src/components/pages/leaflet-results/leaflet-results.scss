@@ -41,6 +41,7 @@ div.results-container {
 
 main#results-page {
   overflow-x: auto;
+  height: 100vh;
   background-image: linear-gradient(to right bottom, #5B7CFF, rgb(26, 26, 26));
   @media (max-width: 810px) {
     padding: 0;
