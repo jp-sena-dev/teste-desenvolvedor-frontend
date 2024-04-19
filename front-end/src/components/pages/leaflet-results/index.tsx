@@ -2,10 +2,11 @@ import './leaflet-results.scss';
 import { useEffect, useState } from 'react';
 import { fetchLeaflets } from '../../../utils/api/get-leaflet';
 import { useNavigate, useParams } from 'react-router-dom';
-import { FetchLeaflet, SortQueryleaflet } from '../../../types/leaflet';
+import { FetchLeaflet, Leaflet, SortQueryleaflet } from '../../../types/leaflet';
 import { LeafletTable } from './components/leaflet-table';
 import { ResultsHeader } from './components/results-header';
 import { PaginationButton } from '../../atoms/pagination-button';
+import { ModalMedicine } from './components/medicine-modal';
 
 export function LeafletResults() {
   const param = useParams();
@@ -13,6 +14,7 @@ export function LeafletResults() {
   const [medicationList, setMedicationList] = useState<FetchLeaflet>();
   const [currentePageNumber, setCurrentePageNumber] = useState(1);
   const [medicationSort, setMedicationSort] = useState<SortQueryleaflet | undefined>();
+  const [showMedicineInformation, setShowMedinecineInformation] = useState<Leaflet | undefined>();
 
   const searchMedications = async (pageNumber?: number) => {
     try {
@@ -49,10 +51,14 @@ export function LeafletResults() {
   return (
     <main id="results-page">
       <div className="results-container">
+        <ModalMedicine isOpen={!!showMedicineInformation} medicineInfo={showMedicineInformation} onClose={() => setShowMedinecineInformation(undefined)} />
         <ResultsHeader handleChangeSort={handleChangeSort} />
-        <LeafletTable medicationList={medicationList} />
+        <LeafletTable
+          hadleClick={setShowMedinecineInformation}
+          medicationList={medicationList}
+        />
         <div className="buttons-container">
-          <button className="Back" onClick={() => navigate('/')}>Voltar</button>
+          <button className="back" onClick={() => navigate('/')}>Voltar</button>
           {medicationList?.pages > 1 && (
             <div>
               <PaginationButton

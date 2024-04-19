@@ -1,0 +1,66 @@
+div.modal-medicine-container {
+  position: absolute;
+  left: 0;
+  left: 100%;
+  transition: 0.5s;
+  width: 100%;
+  height: 100%;
+  background-color: white;
+
+  button.close-modal {
+    background-color: transparent;
+    border:  none;
+    position: absolute;
+    right: 20px;
+    top: 0px;
+    font-size: 24px;
+    cursor: pointer;
+  }
+
+  h1 {
+    @media (max-width: 800px) {
+      font-size: 30px;
+    }
+  }
+
+  table {
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    gap: 8px;
+    tr {
+      display: grid;
+      grid-template-columns: 1fr 3fr;
+      min-height: 24px;
+      padding: 12px;
+      justify-items: stretch;
+      align-items: center;
+      td {
+        display: flex;
+        justify-content: space-around;
+      }
+    }
+
+    @media (max-width: 800px) {
+      min-width: 320px;
+      margin: 0 auto;
+
+      tr {
+        td {
+          display: flex;
+          justify-content: start;
+          gap: 4px;
+          padding-left: 4px;
+        }
+        th {
+          min-width: 100px;
+        }
+      }
+    }
+  }
+
+  &.show {
+    left: 0;
+  }
+}

@@ -1,5 +1,12 @@
-div.table-results-page {
+div.table-results-container {
   min-height: 500px;
+
+  a {
+    color: #5b7cff;
+    &:hover {
+      color: #2d48b4;
+    }
+  }
 
   table {
     font-size: 14px;
